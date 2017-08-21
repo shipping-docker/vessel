@@ -11,9 +11,9 @@ This is all there is to using it:
 composer require fideloper/vessel
 php artisan vendor:publish --provider="Vessel\VesselServiceProvider"
 
-# Run this once to set 
-# project .env file
-./vessel env
+# Run this once to initialize project
+# Must run with "bash" until initialized
+bash vessel env
 
 ./vessel start
 ```
