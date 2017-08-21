@@ -1,0 +1,19 @@
+{
+    "name": "fideloper/vessel",
+    "description": "Simple Docker dev environment",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "fideloper",
+            "email": "fideloper@gmail.com"
+        }
+    ],
+    "require": {},
+    "extra": {
+    "laravel": {
+        "providers": [
+            "Fideloper\\Vessel\\VesselServiceProvider"
+        ]
+    }
+},
+}

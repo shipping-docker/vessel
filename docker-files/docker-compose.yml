@@ -1,0 +1,54 @@
+version: '2'
+services:
+  app:
+    build:
+      context: ./docker/app
+      dockerfile: Dockerfile
+    image: vessel/app
+    ports:
+     - "${APP_PORT}:80"
+    environment:
+      CONTAINER_ENV: "${APP_ENV}"
+      XDEBUG_HOST: ${XDEBUG_HOST}
+    volumes:
+     - .:/var/www/html
+    networks:
+     - vessel
+  node:
+    build:
+      context: ./docker/node
+      dockerfile: Dockerfile
+    image: vessel/node
+    volumes:
+     - .:/var/www/html
+    networks:
+     - vessel
+  mysql:
+    image: mysql:5.7
+    ports:
+     - "${DB_PORT}:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
+      MYSQL_DATABASE: "${DB_DATABASE}"
+      MYSQL_USER: "${DB_USERNAME}"
+      MYSQL_PASSWORD: "${DB_PASSWORD}"
+    volumes:
+     - mysqldata:/var/lib/mysql
+     # - ./docker/mysql/conf.d:/etc/mysql/conf.d
+     # - ./docker/mysql/logs:/var/log/mysql
+    networks:
+     - vessel
+  redis:
+    image: redis:alpine
+    volumes:
+     - redisdata:/data
+    networks:
+     - vessel
+networks:
+  vessel:
+    driver: "bridge"
+volumes:
+  mysqldata:
+    driver: "local"
+  redisdata:
+    driver: "local"
