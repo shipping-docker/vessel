@@ -38,6 +38,8 @@ Or when starting Vessel:
 APP_PORT=8080 ./vessel start
 ```
 
+Then you can view your project at `http://localhost:8080`.
+
 ## How does this work?
 
 If you're unfamiliar with Docker, try out this [Docker in Development](https://serversforhackers.com/s/docker-in-development) course, which explains important topics in how this is put together.
