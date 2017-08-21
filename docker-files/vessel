@@ -40,17 +40,46 @@ COMPOSE="docker-compose -f docker-compose.yml"
 if [ $# -gt 0 ]; then
 
     # Edit .env file to set correct hostnames for mysql/redis
-    if [ "$1" == "env" ]; then
+    if [ "$1" == "init" ]; then
+        echo "VESSEL: Initializing Vessel..."
+        COMPOSER=$(which composer)
+        if [ -z "$COMPOSER" ]; then
+            echo "No composer command found within current working directory $(pwd)"
+            echo "Please install composer package predis/predis:~1.0"
+        else
+            echo "VESSEL: Installing Predis"
+            $COMPOSER require predis/predis:~1.0
+        fi
+
+
         if [ ! -f .env ]; then
             echo "No .env file found within current working directory $(pwd)"
             exit 0
         fi
 
+        echo "VESSEL: Setting .env Variables"
+        cp .env .env.vessel
         $SEDCMD -i ".bak" "s/DB_HOST=.*/DB_HOST=mysql/" .env
         $SEDCMD -i ".bak" "s/CACHE_DRIVER=.*/CACHE_DRIVER=redis/" .env
         $SEDCMD -i ".bak" "s/SESSION_DRIVER=.*/SESSION_DRIVER=redis/" .env
         $SEDCMD -i ".bak" "s/REDIS_HOST=.*/REDIS_HOST=redis/" .env
         rm .env.bak
+
+        if [ ! -f vessel ]; then
+            echo "No vessel file found within current working directory $(pwd)"
+            echo "Have you run the vendor:publish command yet?"
+            exit 0
+        fi
+
+        echo "VESSEL: Making vessel command available"
+        chmod +x vessel
+
+        echo ""
+        echo "VESSEL: Complete!"
+        echo "VESSEL: You can now use Vessel"
+        echo "VESSEL: Try starting it:"
+        echo "./vessel start"
+
 
     # Start up containers
     elif [ "$1" == "start" ]; then
