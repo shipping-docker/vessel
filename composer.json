@@ -17,7 +17,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Fideloper\\Vessel\\VesselServiceProvider"
+                "Vessel\\VesselServiceProvider"
             ]
         }
     }
