@@ -9,9 +9,9 @@ class VesselServiceProvider extends ServiceProvider {
     public function boot()
     {
         $this->publishes([
-            VESSEL_PATH.'/docker-files/docker' => base_path(),
-            VESSEL_PATH.'/docker-files/docker-compose.yml' => base_path(),
-            VESSEL_PATH.'/docker-files/vessel' => base_path(),
+            VESSEL_PATH.'/docker-files/docker' => base_path('docker'),
+            VESSEL_PATH.'/docker-files/docker-compose.yml' => base_path('docker-compose.yml'),
+            VESSEL_PATH.'/docker-files/vessel' => base_path('vessel'),
         ]);
     }
 
