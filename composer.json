@@ -8,12 +8,17 @@
             "email": "fideloper@gmail.com"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "Vessel\\": "src/"
+        }
+    }, 
     "require": {},
     "extra": {
-    "laravel": {
-        "providers": [
-            "Fideloper\\Vessel\\VesselServiceProvider"
-        ]
+        "laravel": {
+            "providers": [
+                "Fideloper\\Vessel\\VesselServiceProvider"
+            ]
+        }
     }
-},
 }
