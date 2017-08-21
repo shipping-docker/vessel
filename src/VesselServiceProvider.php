@@ -1,5 +1,7 @@
 <?php
 
+namespace Vessel;
+
 use Illuminate\Support\ServiceProvider;
 
 class VesselServiceProvider extends ServiceProvider {
