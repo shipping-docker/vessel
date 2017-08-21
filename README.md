@@ -3,9 +3,9 @@ Up and running with small Docker dev environments.
 
 ## Install
 
-Vessel is just a small set of files that sets up a local Docker-based dev environment per project. There is no thing to install globally, except Docker itself!
+Vessel is just a small set of files that sets up a local Docker-based dev environment per project. There is nothing to install globally, except Docker itself!
 
-This is it!
+This is all there is to using it:
 
 ```bash
 composer require fideloper/vessel
@@ -22,23 +22,43 @@ Head to `http://localhost` in your browser and see your Laravel site!
 
 ## Multiple Environments
 
-Vessel attempts to bind to port 80 on your machine, so you can simply go to `http://localhost` in your browser.
+Vessel attempts to bind to port 80 and 3306 on your machine, so you can simply go to `http://localhost` in your browser.
 
-However, if you run more than one instance of Vessel, you'll get an error when starting it; Port 80 can only be used once. To get around this, use a different port per project by setting the `APP_PORT` environment variable in one of two ways:
+However, if you run more than one instance of Vessel, you'll get an error when starting it; Each port can only be used once. To get around this, use a different port per project by setting the `APP_PORT` and `MYSQL_PORT` environment variables in one of two ways:
 
-Within the .env file:
+Within the `.env` file:
 
 ```
 APP_PORT=8080
+MYSQL_PORT=33060
 ```
 
 Or when starting Vessel:
 
 ```bash
-APP_PORT=8080 ./vessel start
+APP_PORT=8080 MYSQL_PORT=33060 ./vessel start
 ```
 
-Then you can view your project at `http://localhost:8080`.
+Then you can view your project at `http://localhost:8080` and access your database locally from port `33060`;
+
+## Sequel Pro
+
+Since we bind the MySQL to port `3306`, SequelPro can access the database directly.
+
+![sequel pro access](https://s3.amazonaws.com/sfh-assets/vessel-sequel-pro.png)
+
+The password for user `root` will be the same that you set as the `DB_PASS` within your `.env` file.
+
+> The port setting must match the `MYSQL_PORT` environment variable, which defaults to `3306`.
+
+## What's included?
+
+The aim of this project is simplicity. It includes:
+
+* PHP 7.1
+* MySQL 5.7
+* Redis ([latest](https://hub.docker.com/_/redis/))
+* NodeJS ([latest](https://hub.docker.com/_/node/)), with Yarn & Gulp
 
 ## How does this work?
 
