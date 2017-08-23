@@ -51,6 +51,89 @@ The password for user `root` is set by environment variable `DB_PASS` from withi
 
 > The port setting must match the `MYSQL_PORT` environment variable, which defaults to `3306`.
 
+## Common Commands
+
+Here's a list of built-in helpers you can use. Any command not defined in the `vessel` script will default to being passed to the `docker-compose` command. If not command is used, it will run `docker-compose ps` to list the running containers for this environment.
+
+### Starting and Stopping Vessel
+
+```bash
+# Start the environment
+./vessel start
+
+## This is equivalent to
+./vessel up -d
+
+# Stop the environment
+./vessel stop
+
+## This is equivalent to
+./vessel down
+```
+
+### Development
+
+```bash
+# Use composer
+./vessel composer <cmd>
+./vessel comp <cmd> # "comp" is a shortcut to "composer"
+
+# Use artisan
+./vessel artisan <cmd>
+./vessel art <cmd> # "art" is a shortcut to "artisan"
+
+# Run phpunit tests
+./vessel test
+
+## You can pass anything you would to phpunit to this as well
+./vessel test --filter=some.phpunit.filter
+./vessel test tests/Unit/SpecificTest.php
+
+
+# Run npm
+./vessel npm <cmd>
+
+# Run gulp
+./vessel gulp <cmd>
+
+# Run yarn
+./vessel yarn <cmd>
+```
+
+### Docker Commands
+
+As mentioned, anything not recognized as a built-in command will be used as an argument for the `docker-compose` command. Here's a few handy tricks:
+
+```bash
+# Both will list currently running containers and their status
+./vessel
+./vessel ps
+
+# Check log output of a container service
+./vessel logs app # nginx | php logs
+./vessel logs mysql # mysql logs
+./vessel logs redis # redis logs
+
+## Tail the logs to see output as it's generated
+./vessel logs -f app
+
+# Start a bash shell inside of a container
+# This is just like SSH'ing into a server
+# Note that changes to a container made this way will **NOT** 
+#   survive through stopping and starting the vessel environment
+#   To install software or change server configuration, you'll need to
+#     edit the Dockerfile and run: ./vessel build
+./vessel exec app bash
+
+# Example: mysqldump database "homestead" to local file system
+#          We must add the password in the command line this way
+#          This creates files "homestead.sql" on your local file system, not
+#          inside of the container
+# @link https://serversforhackers.com/c/mysql-in-dev-docker
+./vessel exec mysql mysqldump -u root -psecret homestead > homestead.sql
+```
+
+
 ## What's included?
 
 The aim of this project is simplicity. It includes:
