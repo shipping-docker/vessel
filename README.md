@@ -99,6 +99,7 @@ Here's a list of built-in helpers you can use. Any command not defined in the `v
 # Run yarn
 
 ./vessel yarn <cmd>
+
 ## Example: install deps
 ./vessel yarn install
 
