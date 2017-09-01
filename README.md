@@ -85,7 +85,7 @@ Here's a list of built-in helpers you can use. Any command not defined in the `v
 # Run phpunit tests
 ./vessel test
 
-## You can pass anything you would to phpunit to this as well
+## Example: You can pass anything you would to phpunit to this as well
 ./vessel test --filter=some.phpunit.filter
 ./vessel test tests/Unit/SpecificTest.php
 
@@ -93,11 +93,17 @@ Here's a list of built-in helpers you can use. Any command not defined in the `v
 # Run npm
 ./vessel npm <cmd>
 
-# Run gulp
-./vessel gulp <cmd>
+## Example: install deps
+./vessel npm install
 
 # Run yarn
+
 ./vessel yarn <cmd>
+## Example: install deps
+./vessel yarn install
+
+# Run gulp
+./vessel gulp <cmd>
 ```
 
 ### Docker Commands
@@ -110,12 +116,17 @@ As mentioned, anything not recognized as a built-in command will be used as an a
 ./vessel ps
 
 # Check log output of a container service
+./vessel logs # all container logs
 ./vessel logs app # nginx | php logs
 ./vessel logs mysql # mysql logs
 ./vessel logs redis # redis logs
 
 ## Tail the logs to see output as it's generated
-./vessel logs -f app
+./vessel logs -f # all logs
+./vessel logs -f app # nginx | php logs
+
+## Tail Laravel Logs
+./vessel exec app tail -f /var/www/html/storage/logs/laravel.log
 
 # Start a bash shell inside of a container
 # This is just like SSH'ing into a server
