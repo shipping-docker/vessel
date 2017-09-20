@@ -1,4 +1,5 @@
 # Vessel
+
 Up and running with small Docker dev environments.
 
 ## Install
@@ -13,7 +14,7 @@ php artisan vendor:publish --provider="Vessel\VesselServiceProvider"
 
 # Run this once to initialize project
 # Must run with "bash" until initialized
-bash vessel env
+bash vessel init
 
 ./vessel start
 ```
