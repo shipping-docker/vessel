@@ -1,10 +1,10 @@
 {
-    "name": "fideloper/vessel",
-    "description": "Simple Docker dev environment",
+    "name": "shipping-docker/vessel",
+    "description": "Simple Docker dev environments",
     "license": "MIT",
     "authors": [
         {
-            "name": "fideloper",
+            "name": "Chris Fidao",
             "email": "fideloper@gmail.com"
         }
     ],
