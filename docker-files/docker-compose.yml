@@ -33,7 +33,7 @@ services:
       MYSQL_USER: "${DB_USERNAME}"
       MYSQL_PASSWORD: "${DB_PASSWORD}"
     volumes:
-     - mysqldata:/var/lib/mysql
+     - vesselmysql:/var/lib/mysql
      # - ./docker/mysql/conf.d:/etc/mysql/conf.d
      # - ./docker/mysql/logs:/var/log/mysql
     networks:
@@ -41,14 +41,14 @@ services:
   redis:
     image: redis:alpine
     volumes:
-     - redisdata:/data
+     - vesselredis:/data
     networks:
      - vessel
 networks:
   vessel:
     driver: "bridge"
 volumes:
-  mysqldata:
+  vesselmysql:
     driver: "local"
-  redisdata:
+  vesselredis:
     driver: "local"
