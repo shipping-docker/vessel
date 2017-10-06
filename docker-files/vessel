@@ -186,6 +186,20 @@ if [ $# -gt 0 ]; then
                 ./node_modules/.bin/gulp "$@"
         fi
 
+    # If "dump" is used, run mysqldump
+    # from our mysql container
+    elif [ "$1" == "dump" ]; then
+        shift 1
+        source .env
+        if [ "$EXEC" == "yes" ]; then
+            $COMPOSE exec mysql \
+                mysqldump -u root -p$DB_PASSWORD --default-character-set=utf8mb4 $DB_DATABASE
+        else
+            $COMPOSE run --rm \
+                mysql \
+                mysqldump -h mysql -u root -p$DB_PASSWORD --default-character-set=utf8mb4 $DB_DATABASE
+        fi
+
     # Else, pass-thru args to docker-compose
     else
         $COMPOSE "$@"
