@@ -147,44 +147,29 @@ if [ $# -gt 0 ]; then
     # from our node container
     elif [ "$1" == "npm" ]; then
         shift 1
-        if [ "$EXEC" == "yes" ]; then
-            $COMPOSE exec node \
-                sh -c "cd /var/www/html && npm $@"
-        else
-            $COMPOSE run --rm \
-                -w /var/www/html \
-                node \
-                npm "$@"
-        fi
+        $COMPOSE run --rm \
+            -w /var/www/html \
+            node \
+            npm "$@"
 
 
     # If "yarn" is used, run yarn
     # from our node container
     elif [ "$1" == "yarn" ]; then
         shift 1
-        if [ "$EXEC" == "yes" ]; then
-            $COMPOSE exec node \
-                sh -c "cd /var/www/html && yarn $@"
-        else
-            $COMPOSE run --rm \
-                -w /var/www/html \
-                node \
-                yarn "$@"
-        fi
+        $COMPOSE run --rm \
+            -w /var/www/html \
+            node \
+            yarn "$@"
 
     # If "gulp" is used, run gulp
     # from our node container
     elif [ "$1" == "gulp" ]; then
         shift 1
-        if [ "$EXEC" == "yes" ]; then
-            $COMPOSE exec node \
-                sh -c "cd /var/www/html && ./node_modules/.bin/gulp $@"
-        else
-            $COMPOSE run --rm \
-                -w /var/www/html \
-                node \
-                ./node_modules/.bin/gulp "$@"
-        fi
+        $COMPOSE run --rm \
+            -w /var/www/html \
+            node \
+            ./node_modules/.bin/gulp "$@"
 
     # If "dump" is used, run mysqldump
     # from our mysql container
