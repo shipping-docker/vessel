@@ -70,11 +70,14 @@ if [ $# -gt 0 ]; then
 
         echo "VESSEL: Setting .env Variables"
         cp .env .env.vessel
-        $SEDCMD -i ".bak" "s/DB_HOST=.*/DB_HOST=mysql/" .env
-        $SEDCMD -i ".bak" "s/CACHE_DRIVER=.*/CACHE_DRIVER=redis/" .env
-        $SEDCMD -i ".bak" "s/SESSION_DRIVER=.*/SESSION_DRIVER=redis/" .env
-        $SEDCMD -i ".bak" "s/REDIS_HOST=.*/REDIS_HOST=redis/" .env
-        rm .env.bak
+        $SEDCMD "s/DB_HOST=.*/DB_HOST=mysql/" .env
+        $SEDCMD "s/CACHE_DRIVER=.*/CACHE_DRIVER=redis/" .env
+        $SEDCMD "s/SESSION_DRIVER=.*/SESSION_DRIVER=redis/" .env
+        $SEDCMD "s/REDIS_HOST=.*/REDIS_HOST=redis/" .env
+
+        if [ -f .env.bak ]; then
+            rm .env.bak
+        fi
 
         if [ ! -f vessel ]; then
             echo "No vessel file found within current working directory $(pwd)"
