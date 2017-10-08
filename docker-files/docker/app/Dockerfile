@@ -33,5 +33,3 @@ COPY start-container /usr/local/bin/start-container
 RUN chmod +x usr/local/bin/start-container
 
 ENTRYPOINT ["start-container"]
-
-RUN chown -R www-data: /var/www/html
