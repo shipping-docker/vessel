@@ -30,6 +30,15 @@ elif [ "$MACHINE" == "mac" ]; then
     SEDCMD="sed -i \".bak\""
 fi
 
+if [ ! -f .env ]; then
+    echo "No .env file found within current working directory $(pwd)"
+    echo "Create a .env file before running ./vessel"
+    exit 0
+fi
+
+# Import variables from .env
+source .env
+
 export APP_PORT=${APP_PORT:-80}
 export MYSQL_PORT=${MYSQL_PORT:-3306}
 
@@ -58,13 +67,6 @@ if [ $# -gt 0 ]; then
         else
             echo "VESSEL: Installing Predis"
             $COMPOSER require predis/predis
-        fi
-
-
-        if [ ! -f .env ]; then
-            echo "No .env file found within current working directory $(pwd)"
-            echo "Create a .env file before re-initializing"
-            exit 0
         fi
 
         echo "VESSEL: Setting .env Variables"
