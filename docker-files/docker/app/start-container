@@ -25,6 +25,10 @@ fi
 # Config /etc/php/7.1/mods-available/xdebug.ini
 sed -i "s/xdebug\.remote_host\=.*/xdebug\.remote_host\=$XDEBUG_HOST/g" /etc/php/7.1/mods-available/xdebug.ini
 
+# Run PHP-FPM as current user
+if [ ! -z "$WWWUSER" ]; then
+    sed -i "s/user\ \=.*/user\ \= $WWWUSER/g" /etc/php/7.1/fpm/pool.d/www.conf
+fi
 
 if [ $# -gt 0 ];then
     # If we passed a command, run it
