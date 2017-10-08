@@ -20,6 +20,7 @@ services:
       context: ./docker/node
       dockerfile: Dockerfile
     image: vessel/node
+    user: "${WWWUSER}"
     volumes:
      - .:/var/www/html
     networks:
