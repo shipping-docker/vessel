@@ -19,8 +19,11 @@ services:
     build:
       context: ./docker/node
       dockerfile: Dockerfile
+      args:
+        uid: "${WWWUSER}"
+        gid: "${WWWGROUP}"
     image: vessel/node
-    user: "${WWWUSER}"
+    user: node
     volumes:
      - .:/var/www/html
     networks:
