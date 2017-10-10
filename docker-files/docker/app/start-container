@@ -8,6 +8,11 @@ if [ ! "production" == "$APP_ENV" ] && [ ! "prod" == "$APP_ENV" ]; then
 
     ## CLI
     ln -sf /etc/php/7.1/mods-available/xdebug.ini /etc/php/7.1/cli/conf.d/20-xdebug.ini
+
+    # Run PHP-FPM as current user
+    if [ ! -z "$WWWUSER" ]; then
+        sed -i "s/user\ \=.*/user\ \= $WWWUSER/g" /etc/php/7.1/fpm/pool.d/www.conf
+    fi
 else
     # Disable xdebug
 
@@ -24,7 +29,6 @@ fi
 
 # Config /etc/php/7.1/mods-available/xdebug.ini
 sed -i "s/xdebug\.remote_host\=.*/xdebug\.remote_host\=$XDEBUG_HOST/g" /etc/php/7.1/mods-available/xdebug.ini
-
 
 if [ $# -gt 0 ];then
     # If we passed a command, run it
