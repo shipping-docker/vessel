@@ -21,7 +21,6 @@ services:
       dockerfile: Dockerfile
       args:
         uid: "${WWWUSER}"
-        gid: "${WWWGROUP}"
     image: vessel/node
     user: node
     volumes:
