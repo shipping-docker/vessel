@@ -48,6 +48,13 @@ COMPOSE="docker-compose -f docker-compose.yml"
 # If we pass any arguments...
 if [ $# -gt 0 ]; then
 
+    # Source .env, which can over-ride env vars
+    # such as APP_PORT, MYSQL_PORT, and WWWUSER
+    if [ -f .env ]; then
+        source .env
+    fi
+
+
     # Edit .env file to set correct hostnames for mysql/redis
     if [ "$1" == "init" ]; then
         echo "VESSEL: Initializing Vessel..."
@@ -179,7 +186,6 @@ if [ $# -gt 0 ]; then
     # from our mysql container
     elif [ "$1" == "dump" ]; then
         shift 1
-        source .env
         if [ "$EXEC" == "yes" ]; then
             $COMPOSE exec mysql \
                 mysqldump -u root -p$DB_PASSWORD --default-character-set=utf8mb4 $DB_DATABASE | grep -v "mysqldump: \[Warning\]"
