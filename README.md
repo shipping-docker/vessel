@@ -29,7 +29,16 @@ Head to `http://localhost` in your browser and see your Laravel site!
 
 Vessel attempts to bind to port 80 and 3306 on your machine, so you can simply go to `http://localhost` in your browser.
 
-However, if you run more than one instance of Vessel, you'll get an error when starting it; Each port can only be used once. To get around this, use a different port per project by setting the `APP_PORT` and `MYSQL_PORT` environment variables when starting Vessel:
+However, if you run more than one instance of Vessel, you'll get an error when starting it; Each port can only be used once. To get around this, use a different port per project by setting the `APP_PORT` and `MYSQL_PORT` environment variables in one of two ways:
+
+Within the `.env` file:
+
+```
+APP_PORT=8080
+MYSQL_PORT=33060
+```
+
+Or when starting Vessel:
 
 ```bash
 APP_PORT=8080 MYSQL_PORT=33060 ./vessel start
