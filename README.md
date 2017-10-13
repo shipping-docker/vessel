@@ -168,7 +168,7 @@ If you want to see how this workflow was developed, check out [Shipping Docker](
 
 ## Supported Systems
 
-Vessel requires Docker, and currenty only works on Mac and Linux.
+Vessel requires Docker, and currently only works on Mac and Linux.
 
 > Window support may come in the future. It will require running Hyper-V.
 
