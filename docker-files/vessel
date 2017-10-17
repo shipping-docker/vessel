@@ -9,7 +9,7 @@ esac
 
 if [ "$MACHINE" == "UNKNOWN" ]; then
     echo "Unsupported system type"
-    echo "System must a Macintosh or Linux"
+    echo "System must be a Macintosh or Linux"
     echo ""
     echo "System detection determined via uname command"
     echo "If the following is empty, could not find uname command: $(which uname)"
