@@ -22,6 +22,6 @@
         }
     },
     "scripts": {
-        "post-update-cmd": "echo 'VESSEL: Updates may require rebuilding your images.\nSee https://github.com/shipping-docker/vessel/releases for details.'"
+        "post-update-cmd": "echo 'VESSEL: Updates may require rebuilding your images.\nVESSEL: See https://github.com/shipping-docker/vessel/releases for details.'"
     }
 }
