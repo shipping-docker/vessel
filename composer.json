@@ -12,7 +12,7 @@
         "psr-4": {
             "Vessel\\": "src/"
         }
-    }, 
+    },
     "require": {},
     "extra": {
         "laravel": {
@@ -20,5 +20,8 @@
                 "Vessel\\VesselServiceProvider"
             ]
         }
+    },
+    "scripts": {
+        "post-update-cmd": "echo 'VESSEL: Updates may require rebuilding your images.\nSee https://github.com/shipping-docker/vessel/releases for details.'"
     }
 }
