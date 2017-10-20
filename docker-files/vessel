@@ -27,7 +27,7 @@ elif [ "$MACHINE" == "mac" ]; then
         export XDEBUG_HOST=$(ipconfig getifaddr en1) # Wifi
     fi
 
-    SEDCMD="sed -i \".bak\""
+    SEDCMD="sed -i .bak"
 fi
 
 export APP_PORT=${APP_PORT:-80}
