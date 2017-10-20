@@ -2,6 +2,8 @@ FROM ubuntu:16.04
 
 MAINTAINER Chris Fidao
 
+WORKDIR /var/www/html
+
 RUN echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu xenial main" > /etc/apt/sources.list.d/ppa_ondrej_php.list \
     && echo "deb http://ppa.launchpad.net/nginx/development/ubuntu xenial main" > /etc/apt/sources.list.d/ppa_nginx_mainline.list \
     && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C \
