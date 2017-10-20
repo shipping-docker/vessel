@@ -166,14 +166,18 @@ If you're unfamiliar with Docker, try out this [Docker in Development](https://s
 
 If you want to see how this workflow was developed, check out [Shipping Docker](https://serversforhackers.com/shipping-docker) and signup for the free course module which explains building this Docker workflow.
 
+#Windows Users
+Please install git bash for windows https://git-for-windows.github.io/.  `vessel` has been tested using Docker for Windows natively (meaning no separate virtual box docker machine).
+For now edit the vessel `XDEBUG_HOST` IP address is hardcoded.  It should be universal for all docker installations. If it is different for your machine just edit the line `export XDEBUG_HOST=10.0.75.1`.
+
+All commands internally are running `winpty` which is necessary for running `docker` command lines.
+
 ## Supported Systems
 
 Vessel requires Docker, and currently only works on Mac and Linux.
 
-> Window support may come in the future. It will require running Hyper-V.
-
 | Mac           | Linux         | Windows |
 | ------------- |:-------------:|:-------:|
-| Install Docker on [Mac](https://docs.docker.com/docker-for-mac/install/) | Install Docker on [Debian](https://docs.docker.com/engine/installation/linux/docker-ce/debian/) | Not Currently Supported |
+| Install Docker on [Mac](https://docs.docker.com/docker-for-mac/install/) | Install Docker on [Debian](https://docs.docker.com/engine/installation/linux/docker-ce/debian/) | Windows with Hyper-V and Git Bash |
 |       | Install Docker on [Ubuntu](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/) | |
 |       | Install Docker on [CentOS](https://docs.docker.com/engine/installation/linux/docker-ce/centos/) | |
