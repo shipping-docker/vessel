@@ -118,7 +118,7 @@ if [ $# -gt 0 ]; then
         shift 1
         if [ "$EXEC" == "yes" ]; then
             $COMPOSE exec app \
-                sh -c "cd /var/www/html && php artisan $@"
+                sh -c "cd /var/www/html && php artisan `echo "$@"`"
         else
             $COMPOSE run --rm \
                 -w /var/www/html \
@@ -132,7 +132,7 @@ if [ $# -gt 0 ]; then
         shift 1
         if [ "$EXEC" == "yes" ]; then
             $COMPOSE exec app \
-                sh -c "cd /var/www/html && composer $@"
+                sh -c "cd /var/www/html && composer `echo "$@"`"
         else
             $COMPOSE run --rm \
                 -w /var/www/html \
@@ -146,7 +146,7 @@ if [ $# -gt 0 ]; then
         shift 1
         if [ "$EXEC" == "yes" ]; then
             $COMPOSE exec app \
-                sh -c "cd /var/www/html && ./vendor/bin/phpunit $@"
+                sh -c "cd /var/www/html && ./vendor/bin/phpunit `echo "$@"`"
         else
             $COMPOSE run --rm \
                 -w /var/www/html \
