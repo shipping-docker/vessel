@@ -118,7 +118,7 @@ if [ $# -gt 0 ]; then
         shift 1
         if [ "$EXEC" == "yes" ]; then
             $COMPOSE exec app \
-                sh -c "cd /var/www/html && php artisan $@"
+                sh -c "cd /var/www/html && php artisan '$@'"
         else
             $COMPOSE run --rm \
                 -w /var/www/html \
