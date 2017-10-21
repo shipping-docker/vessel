@@ -117,7 +117,9 @@ if [ $# -gt 0 ]; then
     elif [ "$1" == "artisan" ] || [ "$1" == "art" ]; then
         shift 1
         if [ "$EXEC" == "yes" ]; then
-            $COMPOSE exec app \
+            $COMPOSE exec \
+                -u $WWWUSER \
+                app \
                 sh -c "cd /var/www/html && php artisan `echo "$@"`"
         else
             $COMPOSE run --rm \
@@ -131,7 +133,9 @@ if [ $# -gt 0 ]; then
     elif [ "$1" == "composer" ] || [ "$1" == "comp" ]; then
         shift 1
         if [ "$EXEC" == "yes" ]; then
-            $COMPOSE exec app \
+            $COMPOSE exec \
+                -u $WWWUSER \
+                app \
                 sh -c "cd /var/www/html && composer `echo "$@"`"
         else
             $COMPOSE run --rm \
@@ -145,7 +149,9 @@ if [ $# -gt 0 ]; then
     elif [ "$1" == "test" ]; then
         shift 1
         if [ "$EXEC" == "yes" ]; then
-            $COMPOSE exec app \
+            $COMPOSE exec \
+                -u $WWWUSER \
+                app \
                 sh -c "cd /var/www/html && ./vendor/bin/phpunit `echo "$@"`"
         else
             $COMPOSE run --rm \
