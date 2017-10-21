@@ -1,38 +1,23 @@
 #!/usr/bin/env bash
 
-if [ ! "production" == "$APP_ENV" ] && [ ! "prod" == "$APP_ENV" ]; then
-    # Enable xdebug
-
-    ## FPM
-    ln -sf /etc/php/7.1/mods-available/xdebug.ini /etc/php/7.1/fpm/conf.d/20-xdebug.ini
-
-    ## CLI
-    ln -sf /etc/php/7.1/mods-available/xdebug.ini /etc/php/7.1/cli/conf.d/20-xdebug.ini
-
-    # Run PHP-FPM as current user
-    if [ ! -z "$WWWUSER" ]; then
-        sed -i "s/user\ \=.*/user\ \= $WWWUSER/g" /etc/php/7.1/fpm/pool.d/www.conf
-    fi
-else
-    # Disable xdebug
-
-    ## FPM
-    if [ -e /etc/php/7.1/fpm/conf.d/20-xdebug.ini ]; then
-        rm -f /etc/php/7.1/fpm/conf.d/20-xdebug.ini
-    fi
-
-    ## CLI
-    if [ -e /etc/php/7.1/cli/conf.d/20-xdebug.ini ]; then
-        rm -f /etc/php/7.1/cli/conf.d/20-xdebug.ini
-    fi
-fi
-
 # Config /etc/php/7.1/mods-available/xdebug.ini
 sed -i "s/xdebug\.remote_host\=.*/xdebug\.remote_host\=$XDEBUG_HOST/g" /etc/php/7.1/mods-available/xdebug.ini
 
+# Run PHP-FPM as current user
+if [ ! -z "$WWWUSER" ]; then
+    sed -i "s/user\ \=.*/user\ \= $WWWUSER/g" /etc/php/7.1/fpm/pool.d/www.conf
+fi
+
+# Ensure /.composer exists and is writable
+if [ ! -d /.composer ]; then
+    mkdir /.composer
+fi
+chmod -R ugo+rw /.composer
+
+# Run a command or supervisord
 if [ $# -gt 0 ];then
-    # If we passed a command, run it
-    exec "$@"
+    # If we passed a command, run it as current user
+    exec gosu $WWWUSER "$@"
 else
     # Otherwise start supervisord
     /usr/bin/supervisord
