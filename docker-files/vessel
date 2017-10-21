@@ -118,12 +118,10 @@ if [ $# -gt 0 ]; then
         shift 1
         if [ "$EXEC" == "yes" ]; then
             $COMPOSE exec app \
-                -u $WWWUSER \
                 sh -c "cd /var/www/html && php artisan `echo "$@"`"
         else
             $COMPOSE run --rm \
                 -w /var/www/html \
-                -u $WWWUSER \
                 app \
                 php artisan "$@"
         fi
@@ -134,12 +132,10 @@ if [ $# -gt 0 ]; then
         shift 1
         if [ "$EXEC" == "yes" ]; then
             $COMPOSE exec app \
-                -u $WWWUSER \
                 sh -c "cd /var/www/html && composer `echo "$@"`"
         else
             $COMPOSE run --rm \
                 -w /var/www/html \
-                -u $WWWUSER \
                 app \
                 composer "$@"
         fi
@@ -150,12 +146,10 @@ if [ $# -gt 0 ]; then
         shift 1
         if [ "$EXEC" == "yes" ]; then
             $COMPOSE exec app \
-                -u $WWWUSER \
                 sh -c "cd /var/www/html && ./vendor/bin/phpunit `echo "$@"`"
         else
             $COMPOSE run --rm \
                 -w /var/www/html \
-                -u $WWWUSER \
                 app \
                 ./vendor/bin/phpunit "$@"
         fi
