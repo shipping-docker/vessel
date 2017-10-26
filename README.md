@@ -168,12 +168,13 @@ If you want to see how this workflow was developed, check out [Shipping Docker](
 
 ## Supported Systems
 
-Vessel requires Docker, and currently only works on Mac and Linux.
+Vessel requires Docker, and currently only works on Windows, Mac and Linux.
 
-> Window support may come in the future. It will require running Hyper-V.
+> Windows requires running Hyper-V.  Using Git Bash (MINGW64) and WSL are supported.  Native
+  Windows is still under development.
 
 | Mac           | Linux         | Windows |
 | ------------- |:-------------:|:-------:|
-| Install Docker on [Mac](https://docs.docker.com/docker-for-mac/install/) | Install Docker on [Debian](https://docs.docker.com/engine/installation/linux/docker-ce/debian/) | Not Currently Supported |
+| Install Docker on [Mac](https://docs.docker.com/docker-for-mac/install/) | Install Docker on [Debian](https://docs.docker.com/engine/installation/linux/docker-ce/debian/) | Install Docker on [Windows] (https://docs.docker.com/docker-for-windows/install/) |
 |       | Install Docker on [Ubuntu](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/) | |
 |       | Install Docker on [CentOS](https://docs.docker.com/engine/installation/linux/docker-ce/centos/) | |
