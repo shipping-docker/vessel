@@ -31,8 +31,10 @@ elif [ "$MACHINE" == "mac" ]; then
     if [ -z "$XDEBUG_HOST" ]; then
         export XDEBUG_HOST=$(ipconfig getifaddr en1) # Wifi
     fi
-
     SEDCMD="sed -i .bak"
+elif [ "$MACHINE" == "mingw64" ]; then
+    export XDEBUG_HOST=10.0.75.1
+    SEDCMD="sed -i"
 fi
 
 export APP_PORT=${APP_PORT:-80}
