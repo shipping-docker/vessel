@@ -104,12 +104,10 @@ if [ $# -gt 0 ]; then
 
     # Start up containers
     elif [ "$1" == "start" ]; then
-        shift 1
         $COMPOSE up -d
 
     # Stop the containers
     elif [ "$1" == "stop" ]; then
-        shift 1
         $COMPOSE down
 
     # If "art" is used, pass-thru to "artisan"
@@ -120,10 +118,9 @@ if [ $# -gt 0 ]; then
             $COMPOSE exec \
                 -u $WWWUSER \
                 app \
-                sh -c "cd /var/www/html && php artisan `echo "$@"`"
+                php artisan "$@"
         else
             $COMPOSE run --rm \
-                -w /var/www/html \
                 app \
                 php artisan "$@"
         fi
@@ -136,10 +133,9 @@ if [ $# -gt 0 ]; then
             $COMPOSE exec \
                 -u $WWWUSER \
                 app \
-                sh -c "cd /var/www/html && composer `echo "$@"`"
+                composer "$@"
         else
             $COMPOSE run --rm \
-                -w /var/www/html \
                 app \
                 composer "$@"
         fi
@@ -152,10 +148,9 @@ if [ $# -gt 0 ]; then
             $COMPOSE exec \
                 -u $WWWUSER \
                 app \
-                sh -c "cd /var/www/html && ./vendor/bin/phpunit `echo "$@"`"
+                ./vendor/bin/phpunit "$@"
         else
             $COMPOSE run --rm \
-                -w /var/www/html \
                 app \
                 ./vendor/bin/phpunit "$@"
         fi
@@ -165,17 +160,14 @@ if [ $# -gt 0 ]; then
     elif [ "$1" == "npm" ]; then
         shift 1
         $COMPOSE run --rm \
-            -w /var/www/html \
             node \
             npm "$@"
-
 
     # If "yarn" is used, run yarn
     # from our node container
     elif [ "$1" == "yarn" ]; then
         shift 1
         $COMPOSE run --rm \
-            -w /var/www/html \
             node \
             yarn "$@"
 
@@ -184,7 +176,6 @@ if [ $# -gt 0 ]; then
     elif [ "$1" == "gulp" ]; then
         shift 1
         $COMPOSE run --rm \
-            -w /var/www/html \
             node \
             ./node_modules/.bin/gulp "$@"
 
@@ -193,7 +184,8 @@ if [ $# -gt 0 ]; then
     elif [ "$1" == "dump" ]; then
         shift 1
         if [ "$EXEC" == "yes" ]; then
-            $COMPOSE exec mysql \
+            $COMPOSE exec \
+                mysql \
                 mysqldump -u root -p$DB_PASSWORD --default-character-set=utf8mb4 $DB_DATABASE | grep -v "mysqldump: \[Warning\]"
         else
             $COMPOSE run --rm \
