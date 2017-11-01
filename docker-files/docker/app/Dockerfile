@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 
-MAINTAINER Chris Fidao
+LABEL maintainer="Chris Fidao"
 
 ENV GOSU_VERSION 1.7
 RUN set -x \
