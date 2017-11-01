@@ -1,5 +1,9 @@
 FROM node:latest
 
+LABEL maintainer="Chris Fidao"
+
+WORKDIR /var/www/html
+
 ARG uid=999
 
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
