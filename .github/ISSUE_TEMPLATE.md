@@ -5,9 +5,9 @@
 
 My OS is:
 
-[ ] MacOS [**Choose one:** Yosemite, El Capitan, Sierra, High Sierra]
-[ ] Linux
-[ ] Windows
+- [ ] MacOS [**Choose one:** Yosemite, El Capitan, Sierra, High Sierra]
+- [ ] Linux
+- [ ] Windows
 
 ## Docker
 
