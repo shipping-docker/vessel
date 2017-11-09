@@ -116,7 +116,7 @@ if [ $# -gt 0 ]; then
         shift 1
         if [ "$EXEC" == "yes" ]; then
             $COMPOSE exec \
-                -u $WWWUSER \
+                -u vessel \
                 app \
                 php artisan "$@"
         else
@@ -131,7 +131,7 @@ if [ $# -gt 0 ]; then
         shift 1
         if [ "$EXEC" == "yes" ]; then
             $COMPOSE exec \
-                -u $WWWUSER \
+                -u vessel \
                 app \
                 composer "$@"
         else
@@ -146,7 +146,7 @@ if [ $# -gt 0 ]; then
         shift 1
         if [ "$EXEC" == "yes" ]; then
             $COMPOSE exec \
-                -u $WWWUSER \
+                -u vessel \
                 app \
                 ./vendor/bin/phpunit "$@"
         else

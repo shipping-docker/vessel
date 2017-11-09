@@ -2,6 +2,7 @@ FROM ubuntu:16.04
 
 LABEL maintainer="Chris Fidao"
 
+RUN useradd -ms /bin/bash -u 1337 vessel
 WORKDIR /var/www/html
 
 ENV GOSU_VERSION 1.7
