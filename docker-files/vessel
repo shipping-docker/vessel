@@ -59,17 +59,17 @@ if [ $# -gt 0 ]; then
     if [ "$1" == "init" ]; then
         echo "VESSEL: Initializing Vessel..."
         COMPOSER=$(which composer)
-        if [ -z "$COMPOSER" ]; then
-          USER_ID=$(id -u -r)
-
-          COMPOSER="docker run -u $USER_ID --rm -it \
-            -v $(pwd):/opt/${PWD##*/} \
-            -w /opt/${PWD##*/} shippingdocker/php-composer:latest \
-            composer require predis/predis"
-        fi
 
         echo "VESSEL: Installing Predis"
-        $COMPOSER require predis/predis
+        if [ -z "$COMPOSER" ]; then
+          docker run -u $UID --rm -it \
+            -v $(pwd):/opt \
+            -w /opt \
+            shippingdocker/php-composer:latest \
+            composer require predis/predis
+        else
+            $COMPOSER require predis/predis
+        fi
 
         if [ ! -f .env ]; then
             echo "No .env file found within current working directory $(pwd)"
