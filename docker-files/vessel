@@ -18,7 +18,7 @@ fi
 
 # Set environment variables for dev
 if [ "$MACHINE" == "linux" ]; then
-    export XDEBUG_HOST=$(/sbin/ifconfig docker0 | grep "inet addr" | cut -d ':' -f 2 | cut -d ' ' -f 1)
+    export XDEBUG_HOST=$(ip address show docker0 | grep "inet" | gawk '{print $2}' | cut -d '/' -f 1)
     SEDCMD="sed -i"
 elif [ "$MACHINE" == "mac" ]; then
     export XDEBUG_HOST=$(ipconfig getifaddr en0) # Ethernet
