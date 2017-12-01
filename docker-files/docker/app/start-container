@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-# Config /etc/php/7.1/mods-available/xdebug.ini
-sed -i "s/xdebug\.remote_host\=.*/xdebug\.remote_host\=$XDEBUG_HOST/g" /etc/php/7.1/mods-available/xdebug.ini
+# Config /etc/php/7.2/mods-available/xdebug.ini
+sed -i "s/xdebug\.remote_host\=.*/xdebug\.remote_host\=$XDEBUG_HOST/g" /etc/php/7.2/mods-available/xdebug.ini
 
 # Run PHP-FPM as current user
 if [ ! -z "$WWWUSER" ]; then
-    sed -i "s/user\ \=.*/user\ \= $WWWUSER/g" /etc/php/7.1/fpm/pool.d/www.conf
+    sed -i "s/user\ \=.*/user\ \= $WWWUSER/g" /etc/php/7.2/fpm/pool.d/www.conf
 
     # Set UID of user "vessel"
     usermod -u $WWWUSER vessel
