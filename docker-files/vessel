@@ -155,9 +155,8 @@ if [ $# -gt 0 ]; then
         shift 1
         if [ "$EXEC" == "yes" ]; then
             $COMPOSE exec \
-                -u vessel \
                 app \
-                ./vendor/bin/phpunit "$@"
+                /var/www/html/vendor/bin/phpunit -c /var/www/html/phpunit.xml "$@"
         else
             $COMPOSE run --rm \
                 app \
