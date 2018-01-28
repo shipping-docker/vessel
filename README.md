@@ -87,6 +87,9 @@ Here's a list of built-in helpers you can use. Any command not defined in the `v
 ./vessel artisan <cmd>
 ./vessel art <cmd> # "art" is a shortcut to "artisan"
 
+# Run tinker REPL
+./vessel tinker # "tinker" is a shortcut for "artisan tinker"
+
 # Run phpunit tests
 ./vessel test
 
