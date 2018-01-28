@@ -22,7 +22,11 @@ if [ "$MACHINE" == "linux" ]; then
     if grep -q Microsoft /proc/version; then # WSL
         export XDEBUG_HOST=10.0.75.1
     else
-        export XDEBUG_HOST=$(/sbin/ifconfig docker0 | grep "inet addr" | cut -d ':' -f 2 | cut -d ' ' -f 1)
+        if [ "$(command -v ip)" ]; then
+            export XDEBUG_HOST=$(ip addr show docker0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
+        else
+            export XDEBUG_HOST=$(ifconfig docker0 | grep "inet addr" | cut -d ':' -f 2 | cut -d ' ' -f 1)
+        fi
     fi
     SEDCMD="sed -i"
 elif [ "$MACHINE" == "mac" ]; then
