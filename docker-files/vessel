@@ -164,6 +164,21 @@ if [ $# -gt 0 ]; then
                 ./vendor/bin/phpunit "$@"
         fi
 
+    # If "tinker" is used, drop into the REPL
+    # inside a new container
+    elif [ "$1" == "tinker" ] ; then
+        shift 1
+        if [ "$EXEC" == "yes" ]; then
+            $COMPOSE exec \
+                -u vessel \
+                app \
+                php artisan tinker
+        else
+            $COMPOSE run --rm \
+                app \
+                php artisan tinker
+        fi
+
     # If "npm" is used, run npm
     # from our node container
     elif [ "$1" == "npm" ]; then
