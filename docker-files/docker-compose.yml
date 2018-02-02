@@ -12,7 +12,7 @@ services:
       XDEBUG_HOST: "${XDEBUG_HOST}"
       WWWUSER: "${WWWUSER}"
     volumes:
-     - .:/var/www/html
+     - .:/var/www/html:cached
     networks:
      - vessel
   node:
@@ -24,7 +24,7 @@ services:
     image: vessel/node
     user: node
     volumes:
-     - .:/var/www/html
+     - .:/var/www/html:cached
     networks:
      - vessel
   mysql:
@@ -37,15 +37,15 @@ services:
       MYSQL_USER: "${DB_USERNAME}"
       MYSQL_PASSWORD: "${DB_PASSWORD}"
     volumes:
-     - vesselmysql:/var/lib/mysql
-     # - ./docker/mysql/conf.d:/etc/mysql/conf.d
-     # - ./docker/mysql/logs:/var/log/mysql
+     - vesselmysql:/var/lib/mysql:cached
+     # - ./docker/mysql/conf.d:/etc/mysql/conf.d:cached
+     # - ./docker/mysql/logs:/var/log/mysql:cached
     networks:
      - vessel
   redis:
     image: redis:alpine
     volumes:
-     - vesselredis:/data
+     - vesselredis:/data:cached
     networks:
      - vessel
 networks:
