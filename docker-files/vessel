@@ -221,6 +221,20 @@ if [ $# -gt 0 ]; then
                 mysqldump -h mysql -u root -p$DB_PASSWORD --default-character-set=utf8mb4 $DB_DATABASE | grep -v "mysqldump: \[Warning\]"
         fi
 
+    # If "mysql" is used, run mysql
+    # from our mysql container
+    elif [ "$1" == "mysql" ]; then
+        shift 1
+        if [ "$EXEC" == "yes" ]; then
+            $COMPOSE exec \
+                mysql \
+                mysql -u root -p$DB_PASSWORD $DB_DATABASE $@"
+        else
+            $COMPOSE run --rm \
+                mysql \
+                mysql -u root -p$DB_PASSWORD $DB_DATABASE $@"
+        fi
+
     # If "node" is used, run node
     # from our node container
     elif [ "$1" == "node" ]; then
