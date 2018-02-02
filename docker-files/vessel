@@ -90,10 +90,30 @@ if [ $# -gt 0 ]; then
 
         echo "VESSEL: Setting .env Variables"
         cp .env .env.bak.vessel
-        $SEDCMD "s/DB_HOST=.*/DB_HOST=mysql/" .env
-        $SEDCMD "s/CACHE_DRIVER=.*/CACHE_DRIVER=redis/" .env
-        $SEDCMD "s/SESSION_DRIVER=.*/SESSION_DRIVER=redis/" .env
-        $SEDCMD "s/REDIS_HOST=.*/REDIS_HOST=redis/" .env
+
+        if [ ! -z "$(grep "DB_HOST" .env)" ]; then
+            $SEDCMD "s/DB_HOST=.*/DB_HOST=mysql/" .env
+        else
+            echo "DB_HOST=mysql" >> .env
+        fi
+
+        if [ ! -z "$(grep "CACHE_DRIVER" .env)" ]; then
+            $SEDCMD "s/CACHE_DRIVER=.*/CACHE_DRIVER=redis/" .env
+        else
+            echo "CACHE_DRIVER=redis" >> .env
+        fi
+
+        if [ ! -z "$(grep "SESSION_DRIVER" .env)" ]; then
+            $SEDCMD "s/SESSION_DRIVER=.*/SESSION_DRIVER=redis/" .env
+        else
+            echo "SESSION_DRIVER=redis" >> .env
+        fi
+
+        if [ ! -z "$(grep "REDIS_HOST" .env)" ]; then
+            $SEDCMD "s/REDIS_HOST=.*/REDIS_HOST=redis/" .env
+        else
+            echo "REDIS_HOST=redis" >> .env
+        fi
 
         if [ -f .env.bak ]; then
             rm .env.bak
