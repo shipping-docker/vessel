@@ -214,11 +214,11 @@ if [ $# -gt 0 ]; then
         if [ "$EXEC" == "yes" ]; then
             $COMPOSE exec \
                 mysql \
-                mysqldump -u root -p$DB_PASSWORD --default-character-set=utf8mb4 $DB_DATABASE | grep -v "mysqldump: \[Warning\]"
+                bash -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysqldump -u root --default-character-set=utf8mb4 $MYSQL_DATABASE'
         else
             $COMPOSE run --rm \
                 mysql \
-                mysqldump -h mysql -u root -p$DB_PASSWORD --default-character-set=utf8mb4 $DB_DATABASE | grep -v "mysqldump: \[Warning\]"
+                bash -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysqldump -u root --default-character-set=utf8mb4 $MYSQL_DATABASE'
         fi
 
     # Else, pass-thru args to docker-compose
