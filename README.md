@@ -25,6 +25,15 @@ bash vessel init
 
 Head to `http://localhost` in your browser and see your Laravel site!
 
+## Lumen
+
+If you're using Lumen, you'll need to copy the Vessel files over manually instead of using `php artisan vendor:publish`. You can do this with this command:
+
+    cp -R vendor/shipping-docker/vessel/docker-files/{vessel,docker-compose.yml,docker} .
+    
+and then you'll be able to install and continue as normal.
+    
+    
 ## Multiple Environments
 
 Vessel attempts to bind to port 80 and 3306 on your machine, so you can simply go to `http://localhost` in your browser.
