@@ -45,6 +45,7 @@ COPY h5bp /etc/nginx/h5bp
 COPY default /etc/nginx/sites-available/default
 COPY php-fpm.conf /etc/php/7.2/fpm/php-fpm.conf
 COPY xdebug.ini /etc/php/7.2/mods-available/xdebug.ini
+COPY vessel.ini /etc/php/7.2/fpm/conf.d/99-vessel.ini
 
 EXPOSE 80
 
