@@ -122,6 +122,21 @@ if [ $# -gt 0 ]; then
     # Stop the containers
     elif [ "$1" == "stop" ]; then
         $COMPOSE down
+    
+    # If "php" is used, pass-thru to "php"
+    # inside a new container
+    elif [ "$1" == "php" ]; then
+        shift 1
+        if [ "$EXEC" == "yes" ]; then
+            $COMPOSE exec \
+                -u vessel \
+                app \
+                php "$@"
+        else
+            $COMPOSE run --rm \
+                app \
+                php "$@"
+        fi
 
     # If "art" is used, pass-thru to "artisan"
     # inside a new container
