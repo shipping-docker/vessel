@@ -273,9 +273,8 @@ if [ $# -gt 0 ]; then
                 mysql \
                 bash -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root $MYSQL_DATABASE'
         else
-            $COMPOSE run --rm \
-                mysql \
-                bash -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root $MYSQL_DATABASE'
+            echo "Error: This command can only be run while a MySQL container is running mysqld (mysql server)."
+            echo "This command cannot run the server and the mysql client at the same time."
         fi
 
     # If "ssh" is used, pass-thru to "ssh"
