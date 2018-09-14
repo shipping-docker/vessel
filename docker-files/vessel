@@ -256,6 +256,58 @@ if [ $# -gt 0 ]; then
                 bash -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysqldump -u root --default-character-set=utf8mb4 $MYSQL_DATABASE'
         fi
 
+    # If "mysql" is used, run mysql
+    # from our mysql container
+    elif [ "$1" == "mysql" ]; then
+        shift 1
+        if [ "$EXEC" == "yes" ]; then
+            $COMPOSE exec \
+                mysql \
+                mysql -u root -p$DB_PASSWORD $DB_DATABASE $@"
+        else
+            $COMPOSE run --rm \
+                mysql \
+                mysql -u root -p$DB_PASSWORD $DB_DATABASE $@"
+        fi
+
+    # If "node" is used, run node
+    # from our node container
+    elif [ "$1" == "node" ]; then
+        shift 1
+        $COMPOSE run --rm \
+            node \
+            node "$@"
+
+    # If "php" is used, pass-thru to "php"
+    # inside a new container
+    elif [ "$1" == "php" ]; then
+        shift 1
+        if [ "$EXEC" == "yes" ]; then
+            $COMPOSE exec \
+                -u vessel \
+                app \
+                php "$@"
+        else
+            $COMPOSE run --rm \
+                app \
+                php "$@"
+        fi
+
+    # If "ssh" is used, pass-thru to "ssh"
+    # inside a new container
+    elif [ "$1" == "ssh" ]; then
+        shift 1
+        if [ "$EXEC" == "yes" ] && [ "$1" != "node" ]; then
+            $COMPOSE exec \
+                -u vessel \
+                $1 \
+                bash
+        else
+            $COMPOSE run --rm \
+                $1 \
+                bash
+        fi
+
     # Else, pass-thru args to docker-compose
     else
         $COMPOSE "$@"
