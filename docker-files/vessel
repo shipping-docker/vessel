@@ -217,6 +217,14 @@ if [ $# -gt 0 ]; then
                 app \
                 php artisan tinker
         fi
+    
+    # If "node" is used, run node
+    # from our node container
+    elif [ "$1" == "node" ]; then
+        shift 1
+        $COMPOSE run --rm \
+            node \
+            node "$@"
 
     # If "npm" is used, run npm
     # from our node container
@@ -263,38 +271,17 @@ if [ $# -gt 0 ]; then
         if [ "$EXEC" == "yes" ]; then
             $COMPOSE exec \
                 mysql \
-                mysql -u root -p$DB_PASSWORD $DB_DATABASE $@"
+                bash -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root $MYSQL_DATABASE'
         else
             $COMPOSE run --rm \
                 mysql \
-                mysql -u root -p$DB_PASSWORD $DB_DATABASE $@"
-        fi
-
-    # If "node" is used, run node
-    # from our node container
-    elif [ "$1" == "node" ]; then
-        shift 1
-        $COMPOSE run --rm \
-            node \
-            node "$@"
-
-    # If "php" is used, pass-thru to "php"
-    # inside a new container
-    elif [ "$1" == "php" ]; then
-        shift 1
-        if [ "$EXEC" == "yes" ]; then
-            $COMPOSE exec \
-                -u vessel \
-                app \
-                php "$@"
-        else
-            $COMPOSE run --rm \
-                app \
-                php "$@"
+                bash -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root $MYSQL_DATABASE'
         fi
 
     # If "ssh" is used, pass-thru to "ssh"
     # inside a new container
+    # e.g.: ./vessel ssh app
+    # e.g.: ./vessel ssh mysql
     elif [ "$1" == "ssh" ]; then
         shift 1
         if [ "$EXEC" == "yes" ] && [ "$1" != "node" ]; then
