@@ -5,7 +5,7 @@
 
 My OS is:
 
-- [ ] MacOS [**Choose one:** Yosemite, El Capitan, Sierra, High Sierra]
+- [ ] MacOS [**Choose one:** Yosemite, El Capitan, Sierra, High Sierra, Mojave]
 - [ ] Linux
 - [ ] Windows
 
