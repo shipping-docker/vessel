@@ -33,7 +33,7 @@ RUN echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu xenial main" > /etc/apt
        php7.2-imap php7.2-mysql php7.2-mbstring \
        php7.2-xml php7.2-zip php7.2-bcmath php7.2-soap \
        php7.2-intl php7.2-readline php7.2-xdebug \
-       php-msgpack php-igbinary  \
+       php7.2-msgpack php7.2-igbinary \
     && php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer \
     && mkdir /run/php \
     && apt-get -y autoremove \
@@ -48,6 +48,7 @@ COPY h5bp /etc/nginx/h5bp
 COPY default /etc/nginx/sites-available/default
 COPY php-fpm.conf /etc/php/7.2/fpm/php-fpm.conf
 COPY xdebug.ini /etc/php/7.2/mods-available/xdebug.ini
+COPY vessel.ini /etc/php/7.2/fpm/conf.d/99-vessel.ini
 
 EXPOSE 80
 

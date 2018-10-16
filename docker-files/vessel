@@ -54,7 +54,7 @@ else
 fi
 
 # Create base docker-compose command to run
-COMPOSE="docker-compose -f docker-compose.yml"
+COMPOSE="docker-compose"
 
 # If we pass any arguments...
 if [ $# -gt 0 ]; then
@@ -90,10 +90,30 @@ if [ $# -gt 0 ]; then
 
         echo "VESSEL: Setting .env Variables"
         cp .env .env.bak.vessel
-        $SEDCMD "s/DB_HOST=.*/DB_HOST=mysql/" .env
-        $SEDCMD "s/CACHE_DRIVER=.*/CACHE_DRIVER=redis/" .env
-        $SEDCMD "s/SESSION_DRIVER=.*/SESSION_DRIVER=redis/" .env
-        $SEDCMD "s/REDIS_HOST=.*/REDIS_HOST=redis/" .env
+
+        if [ ! -z "$(grep "DB_HOST" .env)" ]; then
+            $SEDCMD "s/DB_HOST=.*/DB_HOST=mysql/" .env
+        else
+            echo "DB_HOST=mysql" >> .env
+        fi
+
+        if [ ! -z "$(grep "CACHE_DRIVER" .env)" ]; then
+            $SEDCMD "s/CACHE_DRIVER=.*/CACHE_DRIVER=redis/" .env
+        else
+            echo "CACHE_DRIVER=redis" >> .env
+        fi
+
+        if [ ! -z "$(grep "SESSION_DRIVER" .env)" ]; then
+            $SEDCMD "s/SESSION_DRIVER=.*/SESSION_DRIVER=redis/" .env
+        else
+            echo "SESSION_DRIVER=redis" >> .env
+        fi
+
+        if [ ! -z "$(grep "REDIS_HOST" .env)" ]; then
+            $SEDCMD "s/REDIS_HOST=.*/REDIS_HOST=redis/" .env
+        else
+            echo "REDIS_HOST=redis" >> .env
+        fi
 
         if [ -f .env.bak ]; then
             rm .env.bak
@@ -122,6 +142,21 @@ if [ $# -gt 0 ]; then
     # Stop the containers
     elif [ "$1" == "stop" ]; then
         $COMPOSE down
+    
+    # If "php" is used, pass-thru to "php"
+    # inside a new container
+    elif [ "$1" == "php" ]; then
+        shift 1
+        if [ "$EXEC" == "yes" ]; then
+            $COMPOSE exec \
+                -u vessel \
+                app \
+                php "$@"
+        else
+            $COMPOSE run --rm \
+                app \
+                php "$@"
+        fi
 
     # If "art" is used, pass-thru to "artisan"
     # inside a new container
@@ -182,6 +217,14 @@ if [ $# -gt 0 ]; then
                 app \
                 php artisan tinker
         fi
+    
+    # If "node" is used, run node
+    # from our node container
+    elif [ "$1" == "node" ]; then
+        shift 1
+        $COMPOSE run --rm \
+            node \
+            node "$@"
 
     # If "npm" is used, run npm
     # from our node container
@@ -214,11 +257,41 @@ if [ $# -gt 0 ]; then
         if [ "$EXEC" == "yes" ]; then
             $COMPOSE exec \
                 mysql \
-                mysqldump -u root -p$DB_PASSWORD --default-character-set=utf8mb4 $DB_DATABASE | grep -v "mysqldump: \[Warning\]"
+                bash -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysqldump -u root --default-character-set=utf8mb4 $MYSQL_DATABASE'
         else
             $COMPOSE run --rm \
                 mysql \
-                mysqldump -h mysql -u root -p$DB_PASSWORD --default-character-set=utf8mb4 $DB_DATABASE | grep -v "mysqldump: \[Warning\]"
+                bash -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysqldump -u root --default-character-set=utf8mb4 $MYSQL_DATABASE'
+        fi
+
+    # If "mysql" is used, run mysql
+    # from our mysql container
+    elif [ "$1" == "mysql" ]; then
+        shift 1
+        if [ "$EXEC" == "yes" ]; then
+            $COMPOSE exec \
+                mysql \
+                bash -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root $MYSQL_DATABASE'
+        else
+            echo "Error: This command can only be run while a MySQL container is running mysqld (mysql server)."
+            echo "This command cannot run the server and the mysql client at the same time."
+        fi
+
+    # If "ssh" is used, pass-thru to "ssh"
+    # inside a new container
+    # e.g.: ./vessel ssh app
+    # e.g.: ./vessel ssh mysql
+    elif [ "$1" == "ssh" ]; then
+        shift 1
+        if [ "$EXEC" == "yes" ] && [ "$1" != "node" ]; then
+            $COMPOSE exec \
+                -u vessel \
+                $1 \
+                bash
+        else
+            $COMPOSE run --rm \
+                $1 \
+                bash
         fi
 
     # Else, pass-thru args to docker-compose
