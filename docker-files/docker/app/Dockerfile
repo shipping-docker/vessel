@@ -21,12 +21,11 @@ RUN set -x \
     && gosu nobody true \
     && apt-get purge -y --auto-remove ca-certificates wget
 
-#RUN echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu xenial main" > /etc/apt/sources.list.d/ppa_ondrej_php.list \
-#    && echo "deb http://ppa.launchpad.net/nginx/development/ubuntu xenial main" > /etc/apt/sources.list.d/ppa_nginx_mainline.list \
-#    && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C \
-#    && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C300EE8C \
-#    && apt-get update \
-RUN apt-get update \
+RUN echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu xenial main" > /etc/apt/sources.list.d/ppa_ondrej_php.list \
+    && echo "deb http://ppa.launchpad.net/nginx/development/ubuntu xenial main" > /etc/apt/sources.list.d/ppa_nginx_mainline.list \
+    && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E5267A6C \
+    && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C300EE8C \
+    && apt-get update \
     && apt-get install -y curl zip unzip git supervisor sqlite3 \
     && apt-get install -y nginx php7.2-fpm php7.2-cli \
        php7.2-pgsql php7.2-sqlite3 php7.2-gd \
