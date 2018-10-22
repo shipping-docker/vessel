@@ -142,7 +142,7 @@ if [ $# -gt 0 ]; then
     # Stop the containers
     elif [ "$1" == "stop" ]; then
         $COMPOSE down
-    
+
     # If "php" is used, pass-thru to "php"
     # inside a new container
     elif [ "$1" == "php" ]; then
@@ -217,7 +217,7 @@ if [ $# -gt 0 ]; then
                 app \
                 php artisan tinker
         fi
-    
+
     # If "node" is used, run node
     # from our node container
     elif [ "$1" == "node" ]; then
