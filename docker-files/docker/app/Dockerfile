@@ -35,8 +35,8 @@ RUN echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu bionic main" > /etc/apt
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 
-COPY h5bp /etc/nginx/h5bp
 COPY default /etc/nginx/sites-available/default
+COPY h5bp /etc/nginx/h5bp
 COPY php-fpm.conf /etc/php/7.3/fpm/php-fpm.conf
 COPY xdebug.ini /etc/php/7.3/mods-available/xdebug.ini
 COPY vessel.ini /etc/php/7.3/fpm/conf.d/99-vessel.ini
