@@ -9,7 +9,7 @@ ENV TZ=UTC
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN set -x \
-    && apt-get update && apt-get install -y gnugp gosu \
+    && apt-get update && apt-get install -y gnupg gosu \
     && gosu nobody true
 
 RUN echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu bionic main" > /etc/apt/sources.list.d/ppa_ondrej_php.list \
