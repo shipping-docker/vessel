@@ -11,6 +11,7 @@ services:
       CONTAINER_ENV: "${APP_ENV}"
       XDEBUG_HOST: "${XDEBUG_HOST}"
       WWWUSER: "${WWWUSER}"
+      PHP_IDE_CONFIG: "${PHP_IDE_CONFIG}"
     volumes:
      - .:/var/www/html
     networks:
