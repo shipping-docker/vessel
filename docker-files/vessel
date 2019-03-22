@@ -1,5 +1,21 @@
 #!/usr/bin/env bash
 
+VERSION="4.0.2" # bumped to support vessel --help, vessel --version
+
+# define colors that are used in the help screen
+
+ESC_SEQ="\x1b["
+COL_RESET=${ESC_SEQ}"39;49;00m"
+COL_LYELLOW=${ESC_SEQ}"33;01m"
+COL_LGREEN=${ESC_SEQ}"32;01m"
+COL_CYAN=${ESC_SEQ}"0;36m"
+COL_GREEN=${ESC_SEQ}"0;32m"
+COL_MAGENTA=${ESC_SEQ}"0;35m"
+
+CONTAINER_APP="app"
+CONTAINER_MYSQL="mysql"
+CONTAINER_NODE="node"
+
 UNAMEOUT="$(uname -s)"
 case "${UNAMEOUT}" in
     Linux*)             MACHINE=linux;;
@@ -45,6 +61,62 @@ export APP_PORT=${APP_PORT:-80}
 export MYSQL_PORT=${MYSQL_PORT:-3306}
 export WWWUSER=${WWWUSER:-$UID}
 
+showVersion() {
+    intro="\n🐳 ${COL_GREEN}Vessel for Docker${COL_RESET}\n"
+    intro="$intro   ${COL_CYAN}Version ${VERSION}\n${COL_RESET}"
+
+    printf "$intro"
+}
+
+showHelp() {
+
+    showVersion
+
+    usage="${COL_LYELLOW}Usage:\n${COL_RESET}"
+    usage="$usage  ./vessel <cmd> <options>"
+
+    commands="${COL_LYELLOW}Commands:\n${COL_RESET}"
+    commands="$commands  art | artisan <cmd>         Run Laravel Artisan CLI in ${COL_MAGENTA}${CONTAINER_APP}${COL_RESET} container\n"
+    commands="$commands  composer <cmds>             Run Composer in ${COL_MAGENTA}${CONTAINER_APP}${COL_RESET} container\n"
+    commands="$commands  mysql                       Run MySQL CLI in ${COL_MAGENTA}${CONTAINER_MYSQL}${COL_RESET} container\n"
+    commands="$commands  dump (autoload)             Performs composer dump-autoload in ${COL_MAGENTA}${CONTAINER_APP}${COL_RESET} container\n"
+    commands="$commands  exec <container>            Execute a command in a running container\n"
+    commands="$commands  help                        Shows Help screen\n"
+    commands="$commands  logs <container> < -f >     Displays all logs for <container> and optionally tail\n"
+    commands="$commands  npm                         Execute npm command using ${COL_MAGENTA}${CONTAINER_NODE}${COL_RESET} container\n"
+    commands="$commands  ps                          Display list of all running containers in current directory\n"
+    commands="$commands  start < -l >                Starts all containers defined in ${COL_LGREEN}docker-compose.yml${COL_RESET} file\n"
+    commands="$commands  stop                        Stops all containers defined in ${COL_LGREEN}docker-compose.yml${COL_RESET} file\n"
+    commands="$commands  test [params]               Runs PHPUnit using supplied options in ${COL_MAGENTA}${CONTAINER_APP}${COL_RESET} container\n"
+    commands="$commands  tinker                      Runs Tinker in ${COL_MAGENTA}${CONTAINER_APP}${COL_RESET} container\n"
+    commands="$commands  npm <options>               Runs npm using supplied options in ${COL_MAGENTA}${CONTAINER_NODE}${COL_RESET} container\n"
+    commands="$commands  yarn <options>              Runs yarn using supplied options in ${COL_MAGENTA}${CONTAINER_NODE}${COL_RESET} container\n"
+#    commands="$commands  gulp <task>                 Runs gulp task in ${COL_MAGENTA}${CONTAINER_NODE}${COL_RESET} container\n"
+
+    options="${COL_LYELLOW}Options:\n${COL_RESET}"
+    options="$options --help, -h                   Shows Help (this screen)\n"
+#    options="$options --logs, -l                   Run containers in detached mode (with logging)\n"
+    options="$options --version, -V, version       Show Version\n"
+
+    examples="${COL_LYELLOW}Examples:\n${COL_RESET}"
+    examples="$examples  ${COL_CYAN}$ ./vessel start${COL_RESET}\n"
+    examples="$examples  ${COL_CYAN}$ ./vessel stop${COL_RESET}\n"
+    examples="$examples  ${COL_CYAN}$ ./vessel dump${COL_RESET}\n"
+    examples="$examples  ${COL_CYAN}$ ./vessel logs # all container logs${COL_RESET}\n"
+    examples="$examples  ${COL_CYAN}$ ./vessel composer require <vendor/package>${COL_RESET}\n"
+    examples="$examples  ${COL_CYAN}$ ./vessel mysql${COL_RESET}\n"
+    examples="$examples  ${COL_CYAN}$ ./vessel artisan migrate --seed${COL_RESET}\n"
+    examples="$examples  ${COL_CYAN}$ ./vessel art db:seed${COL_RESET}\n"
+    examples="$examples  ${COL_CYAN}$ ./vessel test --filter=MyFilter${COL_RESET}\n"
+
+    printf "\n"
+    printf "$usage\n\n"
+    printf "$commands\n"
+    printf "$options\n"
+    printf "$examples\n"
+
+}
+
 # Is the environment running
 PSRESULT="$(docker-compose ps -q)"
 if [ ! -z "$PSRESULT" ]; then
@@ -63,6 +135,16 @@ if [ $# -gt 0 ]; then
     # such as APP_PORT, MYSQL_PORT, and WWWUSER
     if [ -f .env ]; then
         source .env
+    fi
+
+
+    if [ "$1" == "--version" ] || [ "$1" == "-v" ] || [ "$1" == "version" ]; then
+        showVersion
+        exit 1
+    fi
+    if [ "$1" == "--help" ] || [ "$1" == "-H" ] || [ "$1" == "help" ]; then
+        showHelp
+        exit 1
     fi
 
 
@@ -302,3 +384,5 @@ else
     # Use the docker-compose ps command if nothing else passed through
     $COMPOSE ps
 fi
+
+

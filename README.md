@@ -30,10 +30,10 @@ Head to `http://localhost` in your browser and see your Laravel site!
 If you're using Lumen, you'll need to copy the Vessel files over manually instead of using `php artisan vendor:publish`. You can do this with this command:
 
     cp -R vendor/shipping-docker/vessel/docker-files/{vessel,docker-compose.yml,docker} .
-    
+
 and then you'll be able to install and continue as normal.
-    
-    
+
+
 ## Multiple Environments
 
 Vessel attempts to bind to port 80 and 3306 on your machine, so you can simply go to `http://localhost` in your browser.
@@ -68,6 +68,16 @@ The password for user `root` is set by environment variable `DB_PASSWORD` from w
 ## Common Commands
 
 Here's a list of built-in helpers you can use. Any command not defined in the `vessel` script will default to being passed to the `docker-compose` command. If not command is used, it will run `docker-compose ps` to list the running containers for this environment.
+
+### Show Vessel Version or Help
+
+```bash
+# shows vessel current version
+$ vessel --version # or [ -v | version ]
+
+# shows vessel help
+$ vessel --help # or [ -H | help ]
+```
 
 ### Starting and Stopping Vessel
 
@@ -148,7 +158,7 @@ As mentioned, anything not recognized as a built-in command will be used as an a
 
 # Start a bash shell inside of a container
 # This is just like SSH'ing into a server
-# Note that changes to a container made this way will **NOT** 
+# Note that changes to a container made this way will **NOT**
 #   survive through stopping and starting the vessel environment
 #   To install software or change server configuration, you'll need to
 #     edit the Dockerfile and run: ./vessel build
@@ -185,8 +195,8 @@ Vessel requires Docker, and currently only works on Windows, Mac and Linux.
 > Windows requires running Hyper-V.  Using Git Bash (MINGW64) and WSL are supported.  Native
   Windows is still under development.
 
-| Mac           | Linux         | Windows |
-| ------------- |:-------------:|:-------:|
+| Mac                                                                      |                                              Linux                                              |                                     Windows                                      |
+| ------------------------------------------------------------------------ | :---------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------: |
 | Install Docker on [Mac](https://docs.docker.com/docker-for-mac/install/) | Install Docker on [Debian](https://docs.docker.com/engine/installation/linux/docker-ce/debian/) | Install Docker on [Windows](https://docs.docker.com/docker-for-windows/install/) |
-|       | Install Docker on [Ubuntu](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/) | |
-|       | Install Docker on [CentOS](https://docs.docker.com/engine/installation/linux/docker-ce/centos/) | |
+|                                                                          | Install Docker on [Ubuntu](https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/) |                                                                                  |
+|                                                                          | Install Docker on [CentOS](https://docs.docker.com/engine/installation/linux/docker-ce/centos/) |                                                                                  |
