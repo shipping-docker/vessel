@@ -13,6 +13,7 @@ services:
       WWWUSER: "${WWWUSER}"
     volumes:
      - .:/var/www/html
+#     - ${COMPOSER_HOME-~/.composer}:/root/.composer
     networks:
      - vessel
   node:
