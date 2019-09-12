@@ -31,6 +31,10 @@ RUN echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu bionic main" > /etc/apt
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+    && sed -i "s/pm\.max_children = .*/pm.max_children = 20/" /etc/php/7.3/fpm/pool.d/www.conf \
+    && sed -i "s/pm\.start_servers = .*/pm.start_servers = 10/" /etc/php/7.3/fpm/pool.d/www.conf \
+    && sed -i "s/pm\.min_spare_servers = .*/pm.min_spare_servers = 5/" /etc/php/7.3/fpm/pool.d/www.conf \
+    && sed -i "s/pm\.max_spare_servers = .*/pm.max_spare_servers = 10/" /etc/php/7.3/fpm/pool.d/www.conf \
     && echo "daemon off;" >> /etc/nginx/nginx.conf
 
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
