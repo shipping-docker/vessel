@@ -25,6 +25,7 @@ RUN echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu bionic main" > /etc/apt
        php7.3-xml php7.3-zip php7.3-bcmath php7.3-soap \
        php7.3-intl php7.3-readline php7.3-xdebug \
        php7.3-msgpack php7.3-igbinary php7.3-ldap \
+       php-redis \
     && php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer \
     && mkdir /run/php \
     && apt-get -y autoremove \
