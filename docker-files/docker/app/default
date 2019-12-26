@@ -1,3 +1,7 @@
+# https://docs.nginx.com/nginx/admin-guide/dynamic-modules/brotli/
+load_module "modules/ngx_http_brotli_filter_module.so";
+load_module "modules/ngx_http_brotli_static_module.so";
+
 server {
     listen 80 default_server;
 
