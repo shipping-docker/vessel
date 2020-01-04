@@ -177,7 +177,7 @@ As mentioned, anything not recognized as a built-in command will be used as an a
 
 The aim of this project is simplicity. It includes:
 
-* PHP 7.3
+* PHP 7.4
 * MySQL 5.7
 * Redis ([latest](https://hub.docker.com/_/redis/))
 * NodeJS ([latest](https://hub.docker.com/_/node/)), with Yarn & Gulp
