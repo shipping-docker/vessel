@@ -39,6 +39,8 @@ RUN mkdir ~/.gnupg \
     && sed -i "s/pm\.max_spare_servers = .*/pm.max_spare_servers = 10/" /etc/php/7.4/fpm/pool.d/www.conf \
     && echo "daemon off;" >> /etc/nginx/nginx.conf
 
+RUN composer global require hirak/prestissimo
+
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 
