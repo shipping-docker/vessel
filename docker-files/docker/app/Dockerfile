@@ -10,7 +10,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN set -x \
     && apt-get update && apt-get install -y gnupg gosu \
-    && gosu nobody true
+    && gosu nobody true \
+    && apt-get install dos2unix
 
 RUN mkdir ~/.gnupg \
     && echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf \
@@ -52,6 +53,7 @@ EXPOSE 80
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY start-container /usr/local/bin/start-container
+RUN dos2unix /usr/local/bin/start-container
 RUN chmod +x /usr/local/bin/start-container
 
 ENTRYPOINT ["start-container"]
