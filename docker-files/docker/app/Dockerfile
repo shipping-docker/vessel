@@ -15,11 +15,14 @@ RUN set -x \
 RUN mkdir ~/.gnupg \
     && echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf \
     && echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu focal main" > /etc/apt/sources.list.d/ppa_ondrej_php.list \
-    && echo "deb http://ppa.launchpad.net/nginx/development/ubuntu focal main" > /etc/apt/sources.list.d/ppa_nginx_mainline.list \
+    && apt-get install curl gnupg2 ca-certificates lsb-release -y \
+    && echo "deb http://nginx.org/packages/ubuntu `lsb_release -cs` nginx" | tee /etc/apt/sources.list.d/nginx.list \
+    && curl -fsSL https://nginx.org/keys/nginx_signing.key | apt-key add - \
+    && apt-key fingerprint ABF5BD827BD9BF62 \
     && apt-key adv --homedir ~/.gnupg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys E5267A6C \
     && apt-key adv --homedir ~/.gnupg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C300EE8C \
     && apt-get update \
-    && apt-get install -y curl zip unzip git supervisor sqlite3 \
+    && apt-get install -y zip unzip git supervisor sqlite3 \
     && apt-get install -y nginx php7.4-fpm php7.4-cli \
        php7.4-pgsql php7.4-sqlite3 php7.4-gd \
        php7.4-curl php7.4-memcached \
