@@ -26,7 +26,7 @@ server {
         fastcgi_pass unix:/run/php/php7.4-fpm.sock;
     }
 
-    error_page 404 /index.php;
+    error_page 404 =200 /index.php;
 
     location ~ /\.ht {
         deny all;
