@@ -5,6 +5,8 @@ LABEL maintainer="Chris Fidao"
 RUN useradd -ms /bin/bash -u 1337 vessel
 WORKDIR /var/www/html
 
+# Avoid prompts when building
+ENV DEBIAN_FRONTEND noninteractive
 ENV TZ=UTC
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
