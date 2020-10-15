@@ -18,9 +18,6 @@ RUN apt-get update \
     && apt-key adv --homedir ~/.gnupg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C300EE8C \
     &&  \
     && echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu focal main" > /etc/apt/sources.list.d/ppa_ondrej_php.list \
-    && echo "deb http://nginx.org/packages/ubuntu focal nginx" | tee /etc/apt/sources.list.d/nginx.list \
-    && curl -fsSL https://nginx.org/keys/nginx_signing.key | apt-key add - \
-    && apt-key fingerprint ABF5BD827BD9BF62 \
     && apt-get update \
     && apt-get install -y nginx php7.4-fpm php7.4-cli \
        php7.4-pgsql php7.4-sqlite3 php7.4-gd \
