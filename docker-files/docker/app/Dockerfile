@@ -47,6 +47,7 @@ COPY xdebug.ini /etc/php/7.4/mods-available/xdebug.ini
 COPY vessel.ini /etc/php/7.4/fpm/conf.d/99-vessel.ini
 
 EXPOSE 80
+EXPOSE 6001
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY start-container /usr/local/bin/start-container

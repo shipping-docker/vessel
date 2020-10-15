@@ -172,6 +172,12 @@ As mentioned, anything not recognized as a built-in command will be used as an a
 ./vessel exec mysql mysqldump -u root -psecret homestead > homestead.sql
 ```
 
+## Websockets Laravel
+
+Usage:
+
+* First install Websockets Library from its documentation and configure
+* Configure .env file: WEBSOCKETS='your-port', this port will be binded to 6001 port on container.
 
 ## What's included?
 
