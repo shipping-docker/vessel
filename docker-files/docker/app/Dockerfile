@@ -39,14 +39,15 @@ RUN apt-get update \
     && sed -i "s/pm\.start_servers = .*/pm.start_servers = 10/" /etc/php/7.4/fpm/pool.d/www.conf \
     && sed -i "s/pm\.min_spare_servers = .*/pm.min_spare_servers = 5/" /etc/php/7.4/fpm/pool.d/www.conf \
     && sed -i "s/pm\.max_spare_servers = .*/pm.max_spare_servers = 10/" /etc/php/7.4/fpm/pool.d/www.conf \
-    && echo "daemon off;" >> /etc/nginx/nginx.conf
-
-RUN ln -sf /dev/stdout /var/log/nginx/access.log \
-    && ln -sf /dev/stderr /var/log/nginx/error.log
+    && echo "daemon off;" >> /etc/nginx/nginx.conf \
+    && ln -sf /dev/stdout /var/log/nginx/access.log \
+    && ln -sf /dev/stderr /var/log/nginx/error.log \
+    && sed -i 's/^;daemonize.*$/daemonize = no/g' /etc/php/7.4/fpm/php-fpm.conf \
+    && sed -i 's@^error_log.*$@error_log = /proc/self/fd/2@g' /etc/php/7.4/fpm/php-fpm.conf \
+    && echo "\n; Allow Vessel to set env vars for local dev\nclear_env=false" >> /etc/php/7.4/fpm/php-fpm.conf
 
 COPY h5bp /etc/nginx/h5bp
 COPY default /etc/nginx/sites-available/default
-COPY php-fpm.conf /etc/php/7.4/fpm/php-fpm.conf
 COPY xdebug.ini /etc/php/7.4/mods-available/xdebug.ini
 COPY vessel.ini /etc/php/7.4/fpm/conf.d/99-vessel.ini
 
