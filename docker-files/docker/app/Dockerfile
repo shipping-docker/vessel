@@ -10,17 +10,15 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV TZ=UTC
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN set -x \
-    && apt-get update && apt-get install -y gnupg gosu \
-    && gosu nobody true
-
-RUN mkdir ~/.gnupg \
+RUN apt-get update \
+    && apt-get install -y gnupg gosu curl ca-certificates zip unzip git supervisor sqlite3 \
+    && mkdir -p ~/.gnupg \
     && echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf \
     && apt-key adv --homedir ~/.gnupg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys E5267A6C \
     && apt-key adv --homedir ~/.gnupg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C300EE8C \
-    && apt-get install curl gnupg2 ca-certificates lsb-release zip unzip git supervisor sqlite3 -y \
-    && echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu `lsb_release -cs` main" > /etc/apt/sources.list.d/ppa_ondrej_php.list \
-    && echo "deb http://nginx.org/packages/ubuntu `lsb_release -cs` nginx" | tee /etc/apt/sources.list.d/nginx.list \
+    &&  \
+    && echo "deb http://ppa.launchpad.net/ondrej/php/ubuntu focal main" > /etc/apt/sources.list.d/ppa_ondrej_php.list \
+    && echo "deb http://nginx.org/packages/ubuntu focal nginx" | tee /etc/apt/sources.list.d/nginx.list \
     && curl -fsSL https://nginx.org/keys/nginx_signing.key | apt-key add - \
     && apt-key fingerprint ABF5BD827BD9BF62 \
     && apt-get update \
