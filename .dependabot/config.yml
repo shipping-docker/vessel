@@ -1,0 +1,30 @@
+version: 1
+update_configs:
+  # Keep App Dockerfile up to date, batching pull requests weekly
+  - package_manager: "docker"
+    directory: "/docker-files/docker/app"
+    update_schedule: "weekly"
+    # Apply default reviewer and label to created
+    # pull requests
+    default_reviewers:
+      - "fideloper"
+    default_labels:
+      - "dependencies"
+    commit_message:
+      prefix: "fix"
+      prefix_development: "chore"
+      include_scope: true
+  # Keep App Dockerfile up to date, batching pull requests weekly
+  - package_manager: "docker"
+    directory: "/docker-files/docker/node"
+    update_schedule: "weekly"
+    # Apply default reviewer and label to created
+    # pull requests
+    default_reviewers:
+      - "fideloper"
+    default_labels:
+      - "dependencies"
+    commit_message:
+      prefix: "fix"
+      prefix_development: "chore"
+      include_scope: true
