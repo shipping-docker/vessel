@@ -153,17 +153,6 @@ if [ $# -gt 0 ]; then
         echo "VESSEL: Initializing Vessel..."
         COMPOSER=$(which composer)
 
-        echo "VESSEL: Installing Predis"
-        if [ -z "$COMPOSER" ]; then
-          docker run -u $UID --rm -it \
-            -v $(pwd):/opt \
-            -w /opt \
-            shippingdocker/php-composer:latest \
-            composer require predis/predis
-        else
-            $COMPOSER require predis/predis
-        fi
-
         if [ ! -f .env ]; then
             echo "No .env file found within current working directory $(pwd)"
             echo "Create a .env file before re-initializing"
