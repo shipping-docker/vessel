@@ -347,6 +347,21 @@ if [ $# -gt 0 ]; then
             echo "Error: This command can only be run while a MySQL container is running mysqld (mysql server)."
             echo "This command cannot run the server and the mysql client at the same time."
         fi
+    
+    # If "mysqlrestore" is used, run mysql
+    # from our mysql container with pseudo-tty
+    # allocation disabled; this lets us restore
+    # dumps by piping a dump into the command.
+    # See https://stackoverflow.com/a/49724907/6541
+    elif [ "$1" == "mysqlrestore" ]; then
+        shift 1
+        if [ "$EXEC" == "yes" ]; then
+            $COMPOSE exec -T \
+                mysql \
+                bash -c 'MYSQL_PWD=$MYSQL_ROOT_PASSWORD mysql -u root $MYSQL_DATABASE'
+        else
+            echo "Error: This command can only be run while a MySQL container is running mysqld (mysql server)."
+        fi
 
     # If "ssh" is used, pass-thru to "ssh"
     # inside a new container
