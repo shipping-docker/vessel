@@ -4,7 +4,6 @@ services:
     build:
       context: ./docker/app
       dockerfile: Dockerfile
-    image: vessel/app
     ports:
      - "${APP_PORT}:80"
     environment:
@@ -21,7 +20,6 @@ services:
       dockerfile: Dockerfile
       args:
         uid: "${WWWUSER}"
-    image: vessel/node
     user: node
     volumes:
      - .:/var/www/html
