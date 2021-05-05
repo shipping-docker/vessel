@@ -35,7 +35,7 @@ fi
 
 # Set environment variables for dev
 if [ "$MACHINE" == "linux" ]; then
-    if grep -q Microsoft /proc/version; then # WSL
+    if grep -iq Microsoft /proc/version; then # WSL
         export XDEBUG_HOST=10.0.75.1
     else
         if [ "$(command -v ip)" ]; then
