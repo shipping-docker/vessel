@@ -13,7 +13,7 @@ Vessel is just a small set of files that sets up a local Docker-based dev enviro
 This is all there is to using it:
 
 ```bash
-composer require shipping-docker/vessel
+composer require --dev shipping-docker/vessel
 php artisan vendor:publish --provider="Vessel\VesselServiceProvider"
 
 # Run this once to initialize project
